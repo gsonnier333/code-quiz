@@ -13,7 +13,7 @@ var timeLeft = 0;
 
 function ask(qNum){
     if(qNum>=questions.length){ //if the question number is out of bounds
-        console.log("That question doesn't exist!");
+        console.log("Ended");
         return;
     }
     $("#question").text(questions[qNum]); //show the relevant questions
@@ -23,75 +23,47 @@ function ask(qNum){
     $("#btn2").text(option2[qNum]);
     $("#btn3").text(option3[qNum]);
     $("#btn4").text(option4[qNum]);
-    
-    chosenOption="";
-    // if(chosenOption===""){
-    //     setTimeout(() => {
-    //         ask(qNum);
-    //     }, 1000);
-    //     console.log("waiting...");
-    //     return;
-    // }
-    setTimeout(() => {
-        if(timeLeft<0){
-            return;
-        }
-        if(chosenOption===""){
-            console.log("waiting...");
-            ask(qNum);
-        }
-    }, 1000);
-    if(chosenOption===""){
-        return;
-    }
-    if(timeLeft<0){
-        console.log("rip");
-        //todo: show results screen?
-        return;
-    }
-    
-    if(chosenOption!==correctOption[qNum]){
-        timeLeft -= 2;
-        console.log("wrong");
-    }
-    
-    questionNumber++;
 }
 
 function startGame(){
     console.log("Started");
     timeLeft = 15;
     questionNumber = 0;
+    $("#timer").text(timeLeft);
+    console.log(timeLeft);
     var t = setInterval(function(){
-        $("#timer").text(timeLeft);
-        console.log(timeLeft);
-        timeLeft--;
+        if(questionNumber>=questions.length){ //check if we're done before counting down
+            console.log(timeLeft + " seconds left, good job!");
+            $("#timer").text(timeLeft);
+            clearInterval(t);
+            return;
+        }
+        timeLeft--; //decrement time first
         if(timeLeft < 0){
             console.log("game over, time ran out");
             clearInterval(t);
+            return;
         }
-        if(questionNumber>=questions.length){
-            console.log(timeLeft + " seconds left, good job!");
-            clearInterval(t);
-        }
+        $("#timer").text(timeLeft);
+        console.log(timeLeft);
     }, 1000);
     ask(questionNumber);
 }
 
+function chooseOption(opt){
+    if(opt === correctOption[questionNumber]){
+        console.log("got it");
+    }
+    else{
+        console.log("rip");
+        timeLeft--;
+        $("#timer").text(timeLeft);
+    }
+    questionNumber++;
+    ask(questionNumber);
+}
+
 $("#startBtn").click(startGame);
-$("#btn1").click(function(){
-    chosenOption = $("#btn1").text();
-    console.log(chosenOption);
-})
-$("#btn2").click(function(){
-    chosenOption = $("#btn2").text();
-    console.log(chosenOption);
-})
-$("#btn3").click(function(){
-    chosenOption = $("#btn3").text();
-    console.log(chosenOption);
-})
-$("#btn4").click(function(){
-    chosenOption = $("#btn4").text();
-    console.log(chosenOption);
+$(".choiceBtn").click(function(){
+    chooseOption(this.textContent);
 })
