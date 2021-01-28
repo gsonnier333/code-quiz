@@ -6,10 +6,35 @@ var option2 = ["no", "no"];
 var option3 = ["no", "si"];
 var option4 = ["no", "no"];
 var correctOption = ["yes", "si"]; //correct answers for each respective question, to be compared to chosen answer each time
-var chosenOption = "";
 
 var questionNumber = 0; //keep track of which question we're on
 var timeLeft = 0;
+
+var highscores;
+if(localStorage.getItem("scores") === null){
+    highscores = {
+        names: [],
+        scores: []
+    }
+    localStorage.setItem("scores", JSON.stringify(highscores));
+}
+else{
+    highscores = JSON.parse(localStorage.getItem("scores"));
+}
+
+$(".choiceBtn").hide(); //hide the answer buttons when the page loads
+
+function refreshScores(){
+    console.log("Reloading scores on page");
+    $("#scores").empty();
+    for(var i = 0; i < highscores.names.length; i++){
+        var item = document.createElement("li");
+        item.textContent = highscores.names[i] + ": " + highscores.scores[i];
+        $("#scores").append(item);
+    }
+}
+
+refreshScores();
 
 function ask(qNum){
     if(qNum>=questions.length){ //if the question number is out of bounds
@@ -25,6 +50,19 @@ function ask(qNum){
     $("#btn4").text(option4[qNum]);
 }
 
+function recordScore(){
+    var initials = prompt("Enter your initials to save your score! (Leave blank or cancel to skip saving your score)");
+    if(initials === null || initials === ""){
+        console.log("No initials given, score not saved");
+        return;
+    }
+    highscores.names.push(initials);
+    highscores.scores.push(timeLeft);
+    console.log(highscores);
+    localStorage.setItem("scores", JSON.stringify(highscores));
+    refreshScores();
+}
+
 function endGame(){
     if(timeLeft<0){
         $("#question").text("Sorry, you lost. Better luck next time!");
@@ -32,6 +70,7 @@ function endGame(){
     }
     else{
         $("#question").text("Congrats, you win! Your score is " + timeLeft);
+        setTimeout(recordScore, 500); //wait half a second to make sure the page updates with the score before prompting the user for initials
     }
     $(".choiceBtn").hide();
 }
