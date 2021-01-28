@@ -25,8 +25,20 @@ function ask(qNum){
     $("#btn4").text(option4[qNum]);
 }
 
+function endGame(){
+    if(timeLeft<0){
+        $("#question").text("Sorry, you lost. Better luck next time!");
+        $("#timer").text("Time's up!");
+    }
+    else{
+        $("#question").text("Congrats, you win! Your score is " + timeLeft);
+    }
+    $(".choiceBtn").hide();
+}
+
 function startGame(){
     console.log("Started");
+    $(".choiceBtn").show();
     timeLeft = 15;
     questionNumber = 0;
     $("#timer").text(timeLeft);
@@ -35,12 +47,14 @@ function startGame(){
         if(questionNumber>=questions.length){ //check if we're done before counting down
             console.log(timeLeft + " seconds left, good job!");
             $("#timer").text(timeLeft);
+            endGame();
             clearInterval(t);
             return;
         }
         timeLeft--; //decrement time first
         if(timeLeft < 0){
             console.log("game over, time ran out");
+            endGame();
             clearInterval(t);
             return;
         }
@@ -53,14 +67,14 @@ function startGame(){
 function chooseOption(opt){
     if(opt === correctOption[questionNumber]){
         console.log("got it");
+        questionNumber++;
+        ask(questionNumber);
     }
     else{
         console.log("rip");
         timeLeft--;
         $("#timer").text(timeLeft);
     }
-    questionNumber++;
-    ask(questionNumber);
 }
 
 $("#startBtn").click(startGame);
