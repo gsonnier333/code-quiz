@@ -1,11 +1,11 @@
 //questions in order
-var questions = ["Pick yes", "Pick si"];
+var questions = ["Which programming language is used for coding webpages and adding interactivity?", "What does HTML stand for?", "What does CSS stand for?", "Who is the coolest person in the world?"];
 //options for each respective button held in arrays, corresponding to each question (first element in an array corresponds with first question, etc)
-var option1 = ["yes", "no"];
-var option2 = ["no", "no"];
-var option3 = ["no", "si"];
-var option4 = ["no", "no"];
-var correctOption = ["yes", "si"]; //correct answers for each respective question, to be compared to chosen answer each time
+var option1 = ["Java", "Hotlink Timed Mission Lorem", "Cascading Style Sheets", "Jeff Bezos"];
+var option2 = ["C++", "Hypertext Markup Language", "Critical Symptomatic Silliness", "Elon Musk"];
+var option3 = ["JavaScript", "Href Tag Manual Linking", "Cryptographic Serialization Software", "Tim Cook"];
+var option4 = ["Fortran", "Homebrew Template Macro Language", "C Sharp Server", "The person reading this :)"];
+var correctOption = ["JavaScript", "Hypertext Markup Language", "Cascading Style Sheets", "The person reading this :)"]; //correct answers for each respective question, to be compared to chosen answer each time
 
 var questionNumber = 0; //keep track of which question we're on
 var timeLeft = 0;
