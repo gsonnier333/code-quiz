@@ -76,6 +76,9 @@ function endGame(){
 }
 
 function startGame(){
+    if(timeLeft>0){
+        return; //don't run this function if the game is already running
+    }
     console.log("Started");
     $(".choiceBtn").show();
     timeLeft = 15;

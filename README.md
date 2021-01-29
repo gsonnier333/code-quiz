@@ -1,5 +1,5 @@
 Deployed at: https://gsonnier333.github.io/code-quiz/
-[Screenshot here]
+![Game in progress](./example-of-page.PNG)
 
 For this assignment, I created a web page that can use JavaScript to give the user a multiple choice quiz, followed by a score based on how well they did. When the user presses the Start button, they are given a question and four options for answers. When they click on an incorrect answer, the time they have remaining for the quiz is lowered, and they have to try again to click the correct answer. When they do click the correct answer, they are given the next question in the quiz along with new options for answers. If they complete the quiz by answering all of the questions correctly before time runs out, they win, and are given a score equal to the number of seconds remaining in the quiz when they finished. They are then prompted to enter their initials to save their score, which is added to a list of previous scores and initials. That list is displayed underneath the quiz, and should remain displayed as long as there are scores stored in local storage. If the user cancels the prompt or enters an empty string, their score is omitted from the list.
 
